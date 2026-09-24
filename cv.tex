@@ -1,0 +1,150 @@
+%% CV -- Alexander Du
+%% Compile with pdflatex (works on Overleaf out of the box).
+\documentclass[11pt,letterpaper]{article}
+
+% ---------- Page & fonts ----------
+\usepackage[letterpaper,margin=0.75in]{geometry}
+\usepackage[T1]{fontenc}
+\IfFileExists{ebgaramond.sty}
+  {\usepackage[lining]{ebgaramond}}  % Garamond, closest to the Word version
+  {\usepackage{mathpazo}}            % fallback if EB Garamond isn't installed
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\linespread{1.05}
+
+% ---------- Section headings: bold caps with a rule underneath ----------
+\titleformat{\section}{\bfseries\small\MakeUppercase}{}{0pt}{}[\vspace{-6pt}\rule{\textwidth}{0.6pt}]
+\titlespacing*{\section}{0pt}{10pt}{6pt}
+
+% ---------- Bullet lists ----------
+\setlist[itemize]{leftmargin=1.5em, itemsep=0pt, topsep=1pt, parsep=0pt, label=\textbullet}
+
+% ---------- Helper macros ----------
+% \org{Organization}{(Advisor: ...)}
+\newcommand{\org}[2]{\textbf{#1} #2\par}
+% \entry{Title}{Dates}
+\newcommand{\entry}[2]{#1\hfill#2\par}
+% \pub{Authors}{Title}{Venue. Year.}
+\newcommand{\pub}[3]{#1 #2. #3\par\vspace{5pt}}
+% \simpleline{Left}{Right} for one-line rows (talks, teaching, awards)
+\newcommand{\simpleline}[2]{#1\hfill#2\par}
+\newcommand{\me}{\textbf{A. Du}}
+
+\begin{document}
+
+% ---------- Header ----------
+\begin{center}
+  {\LARGE\scshape Alexander Du}\\[4pt]
+  Durham, NC \,|\, +1 (919) 945-4295 \,|\,
+  \href{mailto:alexander.du@duke.edu}{alexander.du@duke.edu}
+\end{center}
+
+% ---------- Education ----------
+\section{Education}
+\textbf{Duke University}\par
+\entry{Ph.D., Computer Science}{Aug 2024 -- Present}
+\begin{itemize}
+  \item Advisors: Matthew Lentz, Danyang Zhuo
+  \item GPA: 4.00 / 4.00
+\end{itemize}
+\entry{B.S., Computer Science and Mathematics}{May 2024}
+\begin{itemize}
+  \item Minor: Economics
+  \item GPA: 3.72 / 4.00
+\end{itemize}
+
+% ---------- Publications ----------
+\section{Publications}
+\pub{J. Qin, \me, D. Zhang, M. Lentz, and D. Zhuo.}
+    {Can Large Language Models Verify Systems Software? A Case Study Using FSCQ as a Benchmark}
+    {Workshop on Hot Topics in Operating Systems (HotOS). 2025.}
+\pub{S. Eom, T. Ma, N. Vutakuri, \me, Z. Qu, J. Jackson, and M. Gorlatova.}
+    {Did You Do Well? Real-Time Personalized Feedback on Catheter Placement in Augmented Reality-Assisted Neurosurgical Training}
+    {IEEE Conference on Virtual Reality and 3D User Interfaces Abstracts and Workshops (VRW). 2024.}
+
+% ---------- Research Experience ----------
+\section{Research Experience}
+\org{Duke Systems Group}{(Advisors: Matthew Lentz, Danyang Zhuo)}
+\entry{Efficient Compiler-Constrained Code Generation}{Mar 2025 -- Present}
+\begin{itemize}
+  \item Engineered a system that applies arbitrary prefix checkers to a token stream during code generation
+  \item Programmed an efficient prefix checker for C/C++ based on the Clang frontend
+\end{itemize}
+\entry{LLM-Based Proof Synthesis for Systems Software Verification}{Sep 2024 -- Present}
+\begin{itemize}
+  \item Co-architected a proof synthesis system for Rocq that strategically searches over LLM-generated proof tactics
+  \item Fine-tuned local models on Rocq projects to generate tactics with greater domain expertise
+\end{itemize}
+\entry{Efficient Video Analytics Workflow Serving}{May 2022 -- Jul 2022}
+\begin{itemize}
+  \item Developed a framework for serving and optimizing video analytics workflows on heterogeneous infrastructure
+  \item Introduced an automatic model compression module to dynamically balance accuracy and inference latency
+\end{itemize}
+\vspace{4pt}
+
+\org{I\textsuperscript{3}T Lab}{(Advisor: Maria Gorlatova)}
+\entry{User Attention for Surgical AR}{Aug 2023 -- May 2024}
+\begin{itemize}
+  \item Designed a real-time gaze-tracking pipeline for an AR-based surgical guidance system
+  \item Trained machine learning models to detect distractions that could impair task performance
+\end{itemize}
+\entry{Sparse Point Cloud Object Detection}{Jan 2023 -- May 2023}
+\begin{itemize}
+  \item Investigated the domain gap for 3D computer vision between dense LiDAR data and sparse VI-SLAM data
+  \item Implemented and evaluated up-sampling methods to improve point cloud density
+\end{itemize}
+\vspace{4pt}
+
+\org{Networked Systems Lab}{(Advisor: Ramesh Govindan)}
+\entry{3D Segmentation-Based Traffic Reconstruction}{Jul 2023 -- Aug 2023}
+\begin{itemize}
+  \item Contributed to a traffic reconstruction framework using multi-vehicle point cloud fusion
+  \item Integrated 3D semantic segmentation to improve the efficiency of point cloud registration
+\end{itemize}
+
+% ---------- Industry Experience ----------
+\section{Industry Experience}
+\org{Hanson Robotics}{}
+\entry{Software Engineer Intern}{Jun 2021 -- Aug 2021}
+\begin{itemize}
+  \item Developed software for humanoid robots enabling real-time facial expression mimicry
+  \item Created tools for recording robot poses in Blender, improving animation workflows
+\end{itemize}
+
+% ---------- Talks ----------
+\section{Invited Talks}
+Can Large Language Models Verify Systems Software? A Case Study Using FSCQ as a Benchmark.\par
+\simpleline{\textit{Workshop on Hot Topics in Operating Systems, Banff, AB Canada}}{May 2025}
+
+% ---------- Mentorship ----------
+\section{Mentorship Experience}
+\simpleline{Jianjun Ou: M.S., Computer Science}{Nov 2025 -- Present}
+
+% ---------- Teaching ----------
+\section{Teaching Experience}
+\simpleline{COMPSCI 310: Operating Systems}{Fall 2023, Spring 2025, Fall 2025}
+\simpleline{COMPSCI 230: Discrete Mathematics for Computer Science}{Fall 2022, Spring 2023, Fall 2023}
+\simpleline{ECON 204: Econometrics and Data Science}{Spring 2023}
+\simpleline{MATH 105L: Laboratory Calculus}{Spring 2022}
+
+% ---------- Awards ----------
+\section{Awards}
+\simpleline{Duke Graduate Fellowship}{Aug 2024 -- May 2026}
+\simpleline{Duke Summer Research Fellowship}{Jun 2025 -- Aug 2025}
+\simpleline{Duke Conference Travel Fellowship}{May 2025}
+\simpleline{Amazon SURE Research Fellow}{Jul 2023 -- Aug 2023}
+\simpleline{Duke CS+ Research Fellow}{May 2022 -- Jul 2022}
+
+% ---------- Skills ----------
+\section{Skills}
+\textbf{Programming Languages:} Bash, C, C++, C\#, Dafny, Java, Python, Rocq, Rust\par
+\textbf{Compilers and Formal Verification:} Clang, LLVM, SMT solvers (Z3)\par
+\textbf{Machine Learning Frameworks:} Hugging Face, PyTorch, vLLM\par
+\textbf{Development and Deployment:} Docker, Git\par
+
+\end{document}
