@@ -12,6 +12,12 @@
 \usepackage{enumitem}
 \usepackage[hidelinks]{hyperref}
 \hypersetup{pdftitle={Alexander Du Resume}, pdfauthor={Alexander Du}}
+% Make the PDF text readable by resume parsers: emit real spaces between words
+% and map every glyph to a standard character.
+\ifdefined\pdfinterwordspaceon \pdfinterwordspaceon \fi
+\ifdefined\pdfgentounicode \input{glyphtounicode}\pdfgentounicode=1 \fi
+% \eol ends a line with an invisible space so text on consecutive lines doesn't run together
+\newcommand{\eol}{\ifdefined\pdffakespace\pdffakespace\fi}
 
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
@@ -23,37 +29,42 @@
 \makeatletter
 \newcommand{\cvsection}[1]{%
   \par\addvspace{8pt}%                       space between sections
-  {\bfseries\small\MakeUppercase{#1}\par}\nobreak
+  {\bfseries\small\MakeUppercase{#1}\eol\par}\nobreak
   \vspace{3pt}\hrule height 0.6pt\nobreak%   space above rule
   \addvspace{5pt}%                           space below rule
   \@afterheading}
 \newcommand{\cvsubsection}[1]{%
   \par\addvspace{2pt}%                       space above subsection
-  {\bfseries #1\par}\nobreak%                no extra space below subsection
+  {\bfseries\leavevmode\eol #1\eol\par}\nobreak%                no extra space below subsection
+  \@afterheading}
+% \cvrole{Title}{Organization}{Dates}: one line per position, spaced like a subsection
+\newcommand{\cvrole}[3]{%
+  \par\addvspace{2pt}%
+  {\leavevmode\eol\textbf{#1}, #2 \,|\, #3\eol\par}\nobreak
   \@afterheading}
 \makeatother
 
 % ---------- Bullet lists ----------
-\setlist[itemize]{leftmargin=1.5em, itemsep=0pt, topsep=0pt, partopsep=0pt, parsep=0pt, label=\textbullet, after=\addvspace{2pt}}
+\setlist[itemize]{leftmargin=1.5em, itemsep=0pt, topsep=0pt, partopsep=0pt, parsep=0pt, label=\eol\textbullet, after=\addvspace{2pt}}
 
 % ---------- Helper macros ----------
-% \entry{Title}{Dates}
-\newcommand{\entry}[2]{#1\hfill#2\par}
+% \entry{Title}{Dates} -- dates inline so parsers keep them with the title
+\newcommand{\entry}[2]{\leavevmode\eol #1 \,|\, #2\eol\par}
 % \pub{Authors}{Title}{Venue. Year.} -- use inside a pubs environment
 \newenvironment{pubs}{\begin{itemize}[label={}, leftmargin=0pt, itemsep=2pt, topsep=0pt]}{\end{itemize}}
-\newcommand{\pub}[3]{\item #1 #2. #3}
-% \simpleline{Left}{Right} for one-line rows (talks, teaching, awards)
-\newcommand{\simpleline}[2]{#1\hfill#2\par}
+\newcommand{\pub}[3]{\item \eol #1 #2. #3\eol}
+% \simpleline{Left}{Right} for one-line rows (teaching, awards)
+\newcommand{\simpleline}[2]{\leavevmode\eol #1 \,|\, #2\eol\par}
 \newcommand{\me}{\textbf{A. Du}}
 
 \begin{document}
 
 % ---------- Header ----------
 \begin{center}
-  {\LARGE\scshape Alexander Du}\\[2pt]
+  {\LARGE\scshape Alexander Du\eol}\\[2pt]
   Durham, NC \,|\,
   \href{mailto:alexander.du@duke.edu}{alexander.du@duke.edu} \,|\,
-  \href{https://www.linkedin.com/in/alexander-du-a70b76217}{linkedin.com/in/alexander-du-a70b76217}
+  \href{https://www.linkedin.com/in/alexander-du-a70b76217}{linkedin.com/in/alexander-du-a70b76217}\eol
 \end{center}
 
 % ---------- Education ----------
@@ -90,7 +101,7 @@
 
 % ---------- Research Experience ----------
 \cvsection{Research Experience}
-\cvsubsection{Graduate Research}
+\cvrole{Graduate Research Assistant}{Duke University}{Aug 2024 -- Present}
 \entry{Scavenger Colocation for GPU Cluster Utilization}{May 2026 -- Present}
 \begin{itemize}
   \item Evaluated GPU-sharing policies for scavenger jobs to improve utilization on the Duke Compute Cluster
@@ -112,15 +123,17 @@
   \item Co-designed a proof search system over LLM-generated Rocq tactics and fine-tuned models on FSCQ (HotOS '25)
 \end{itemize}
 
-\cvsubsection{Undergraduate Research}
+\cvrole{Undergraduate Research Assistant}{Duke University}{May 2022 -- May 2024}
 \entry{User Attention for Surgical AR (Advisor: Maria Gorlatova)}{Aug 2023 -- May 2024}
-\entry{3D Segmentation-Based Traffic Reconstruction (Advisor: Ramesh Govindan)}{Jul 2023 -- Aug 2023}
 \entry{Sparse Point Cloud Object Detection (Advisor: Maria Gorlatova)}{Jan 2023 -- May 2023}
 \entry{Efficient Video Analytics Workflow Serving (Advisors: Matthew Lentz, Danyang Zhuo)}{May 2022 -- Jul 2022}
 
-% ---------- Industry Experience ----------
-\cvsection{Industry Experience}
-\entry{Software Engineer Intern, Hanson Robotics}{Jun 2021 -- Aug 2021}
+\cvrole{Research Intern}{University of Southern California}{Jul 2023 -- Aug 2023}
+\entry{3D Segmentation-Based Traffic Reconstruction (Advisor: Ramesh Govindan)}{Jul 2023 -- Aug 2023}
+
+% ---------- Work Experience ----------
+\cvsection{Work Experience}
+\cvrole{Software Engineer Intern}{Hanson Robotics}{Jun 2021 -- Aug 2021}
 
 % ---------- Teaching ----------
 \cvsection{Teaching and Mentoring}
@@ -140,10 +153,10 @@
 
 % ---------- Skills ----------
 \cvsection{Skills}
-\textbf{Programming Languages:} Bash, C, C++, Python, Rust, TypeScript\par
-\textbf{Machine Learning Systems:} Hugging Face, PyTorch, SGLang, vLLM\par
-\textbf{GPU Infrastructure:} MIG, MPS, Nsight Compute, Nsight Systems, UVM\par
-\textbf{Other Systems and Tools:} Clang, Docker, gdb, LLVM, Slurm, tsc\par
+\textbf{Programming Languages:} Bash, C, C++, Python, Rust, TypeScript\eol\par
+\textbf{Machine Learning Systems:} Hugging Face, PyTorch, SGLang, vLLM\eol\par
+\textbf{GPU Infrastructure:} MIG, MPS, Nsight Compute, Nsight Systems, UVM\eol\par
+\textbf{Other Systems and Tools:} Clang, Docker, gdb, LLVM, Slurm, tsc\eol\par
 % Uncomment for networking applications:
 % \textbf{Networking:} Congestion control, RPC, socket programming, software-defined networking, TCP/IP\par
 
