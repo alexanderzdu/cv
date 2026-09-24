@@ -12,12 +12,8 @@
 \usepackage{enumitem}
 \usepackage[hidelinks]{hyperref}
 \hypersetup{pdftitle={Alexander Du Resume}, pdfauthor={Alexander Du}}
-% Make the PDF text readable by resume parsers: emit real spaces between words
-% and map every glyph to a standard character.
-\ifdefined\pdfinterwordspaceon \pdfinterwordspaceon \fi
+% Map every glyph to a standard Unicode character so resume parsers read the text correctly.
 \ifdefined\pdfgentounicode \input{glyphtounicode}\pdfgentounicode=1 \fi
-% \eol ends a line with an invisible space so text on consecutive lines doesn't run together
-\newcommand{\eol}{\ifdefined\pdffakespace\pdffakespace\fi}
 
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
@@ -29,42 +25,42 @@
 \makeatletter
 \newcommand{\cvsection}[1]{%
   \par\addvspace{8pt}%                       space between sections
-  {\bfseries\small\MakeUppercase{#1}\eol\par}\nobreak
+  {\bfseries\small\MakeUppercase{#1}\par}\nobreak
   \vspace{3pt}\hrule height 0.6pt\nobreak%   space above rule
   \addvspace{5pt}%                           space below rule
   \@afterheading}
 \newcommand{\cvsubsection}[1]{%
   \par\addvspace{2pt}%                       space above subsection
-  {\bfseries\leavevmode\eol #1\eol\par}\nobreak%                no extra space below subsection
+  {\bfseries #1\par}\nobreak%                no extra space below subsection
   \@afterheading}
 % \cvrole{Title}{Organization}{Dates}: one line per position, spaced like a subsection
 \newcommand{\cvrole}[3]{%
   \par\addvspace{2pt}%
-  {\leavevmode\eol\textbf{#1}, #2 \,|\, #3\eol\par}\nobreak
+  {\textbf{#1}, #2 \,|\, #3\par}\nobreak
   \@afterheading}
 \makeatother
 
 % ---------- Bullet lists ----------
-\setlist[itemize]{leftmargin=1.5em, itemsep=0pt, topsep=0pt, partopsep=0pt, parsep=0pt, label=\eol\textbullet, after=\addvspace{2pt}}
+\setlist[itemize]{leftmargin=1.5em, itemsep=0pt, topsep=0pt, partopsep=0pt, parsep=0pt, label=\textbullet, after=\addvspace{2pt}}
 
 % ---------- Helper macros ----------
 % \entry{Title}{Dates} -- dates inline so parsers keep them with the title
-\newcommand{\entry}[2]{\leavevmode\eol #1 \,|\, #2\eol\par}
+\newcommand{\entry}[2]{#1 \,|\, #2\par}
 % \pub{Authors}{Title}{Venue. Year.} -- use inside a pubs environment
 \newenvironment{pubs}{\begin{itemize}[label={}, leftmargin=0pt, itemsep=2pt, topsep=0pt]}{\end{itemize}}
-\newcommand{\pub}[3]{\item \eol #1 #2. #3\eol}
+\newcommand{\pub}[3]{\item #1 #2. #3}
 % \simpleline{Left}{Right} for one-line rows (teaching, awards)
-\newcommand{\simpleline}[2]{\leavevmode\eol #1 \,|\, #2\eol\par}
+\newcommand{\simpleline}[2]{#1 \,|\, #2\par}
 \newcommand{\me}{\textbf{A. Du}}
 
 \begin{document}
 
 % ---------- Header ----------
 \begin{center}
-  {\LARGE\scshape Alexander Du\eol}\\[2pt]
+  {\LARGE\scshape Alexander Du}\\[2pt]
   Durham, NC \,|\,
   \href{mailto:alexander.du@duke.edu}{alexander.du@duke.edu} \,|\,
-  \href{https://www.linkedin.com/in/alexander-du-a70b76217}{linkedin.com/in/alexander-du-a70b76217}\eol
+  \href{https://www.linkedin.com/in/alexander-du-a70b76217}{linkedin.com/in/alexander-du-a70b76217}
 \end{center}
 
 % ---------- Education ----------
@@ -153,10 +149,10 @@
 
 % ---------- Skills ----------
 \cvsection{Skills}
-\textbf{Programming Languages:} Bash, C, C++, Python, Rust, TypeScript\eol\par
-\textbf{Machine Learning Systems:} Hugging Face, PyTorch, SGLang, vLLM\eol\par
-\textbf{GPU Infrastructure:} MIG, MPS, Nsight Compute, Nsight Systems, UVM\eol\par
-\textbf{Other Systems and Tools:} Clang, Docker, gdb, LLVM, Slurm, tsc\eol\par
+\textbf{Programming Languages:} Bash, C, C++, Python, Rust, TypeScript\par
+\textbf{Machine Learning Systems:} Hugging Face, PyTorch, SGLang, vLLM\par
+\textbf{GPU Infrastructure:} MIG, MPS, Nsight Compute, Nsight Systems, UVM\par
+\textbf{Other Systems and Tools:} Clang, Docker, gdb, LLVM, Slurm, tsc\par
 % Uncomment for networking applications:
 % \textbf{Networking:} Congestion control, RPC, socket programming, software-defined networking, TCP/IP\par
 
