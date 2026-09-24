@@ -10,27 +10,38 @@
   {\usepackage{mathpazo}}            % fallback if EB Garamond isn't installed
 \usepackage{microtype}
 \usepackage{enumitem}
-\usepackage{titlesec}
 \usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Alexander Du Resume}, pdfauthor={Alexander Du}}
 
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
 \linespread{1.05}
 
-% ---------- Section headings: bold caps with a rule underneath ----------
-\titleformat{\section}{\bfseries\small\MakeUppercase}{}{0pt}{}[\vspace{-6pt}\rule{\textwidth}{0.6pt}]
-\titlespacing*{\section}{0pt}{10pt}{6pt}
+% ---------- Section headings ----------
+% All vertical spacing uses \addvspace, so adjacent gaps take the larger value
+% instead of adding up (e.g. a subsection right under a rule adds nothing extra).
+\makeatletter
+\newcommand{\cvsection}[1]{%
+  \par\addvspace{8pt}%                       space between sections
+  {\bfseries\small\MakeUppercase{#1}\par}\nobreak
+  \vspace{3pt}\hrule height 0.6pt\nobreak%   space above rule
+  \addvspace{5pt}%                           space below rule
+  \@afterheading}
+\newcommand{\cvsubsection}[1]{%
+  \par\addvspace{2pt}%                       space above subsection
+  {\bfseries #1\par}\nobreak%                no extra space below subsection
+  \@afterheading}
+\makeatother
 
 % ---------- Bullet lists ----------
-\setlist[itemize]{leftmargin=1.5em, itemsep=0pt, topsep=1pt, parsep=0pt, label=\textbullet}
+\setlist[itemize]{leftmargin=1.5em, itemsep=0pt, topsep=0pt, partopsep=0pt, parsep=0pt, label=\textbullet, after=\addvspace{2pt}}
 
 % ---------- Helper macros ----------
-% \org{Organization}{(Advisor: ...)}
-\newcommand{\org}[2]{\textbf{#1} #2\par}
 % \entry{Title}{Dates}
 \newcommand{\entry}[2]{#1\hfill#2\par}
-% \pub{Authors}{Title}{Venue. Year.}
-\newcommand{\pub}[3]{#1 #2. #3\par\vspace{5pt}}
+% \pub{Authors}{Title}{Venue. Year.} -- use inside a pubs environment
+\newenvironment{pubs}{\begin{itemize}[label={}, leftmargin=0pt, itemsep=2pt, topsep=0pt]}{\end{itemize}}
+\newcommand{\pub}[3]{\item #1 #2. #3}
 % \simpleline{Left}{Right} for one-line rows (talks, teaching, awards)
 \newcommand{\simpleline}[2]{#1\hfill#2\par}
 \newcommand{\me}{\textbf{A. Du}}
@@ -39,112 +50,101 @@
 
 % ---------- Header ----------
 \begin{center}
-  {\LARGE\scshape Alexander Du}\\[4pt]
-  Durham, NC \,|\, +1 (919) 945-4295 \,|\,
-  \href{mailto:alexander.du@duke.edu}{alexander.du@duke.edu}
+  {\LARGE\scshape Alexander Du}\\[2pt]
+  Durham, NC \,|\,
+  \href{mailto:alexander.du@duke.edu}{alexander.du@duke.edu} \,|\,
+  \href{https://www.linkedin.com/in/alexander-du-a70b76217}{linkedin.com/in/alexander-du-a70b76217}
 \end{center}
 
 % ---------- Education ----------
-\section{Education}
-\textbf{Duke University}\par
-\entry{Ph.D., Computer Science}{Aug 2024 -- Present}
+\cvsection{Education}
+\cvsubsection{Duke University}
+\entry{Ph.D., Computer Science (Advisors: Matthew Lentz, Danyang Zhuo)}{Aug 2024 -- Present}
 \begin{itemize}
-  \item Advisors: Matthew Lentz, Danyang Zhuo
   \item GPA: 4.00 / 4.00
+  \item Relevant Coursework: Advanced Computer Networks, Compiler Construction, Distributed Systems, Language-Based Security, Programming Languages, Systems for Machine Learning
 \end{itemize}
 \entry{B.S., Computer Science and Mathematics}{May 2024}
-\begin{itemize}
-  \item Minor: Economics
-  \item GPA: 3.72 / 4.00
-\end{itemize}
 
 % ---------- Publications ----------
-\section{Publications}
+\cvsection{Publications}
+\cvsubsection{Papers}
+\begin{pubs}
 \pub{J. Qin, \me, D. Zhang, M. Lentz, and D. Zhuo.}
     {Can Large Language Models Verify Systems Software? A Case Study Using FSCQ as a Benchmark}
-    {Workshop on Hot Topics in Operating Systems (HotOS). 2025.}
+    {Workshop on Hot Topics in Operating Systems (HotOS). 2025. (Talk)}
 \pub{S. Eom, T. Ma, N. Vutakuri, \me, Z. Qu, J. Jackson, and M. Gorlatova.}
     {Did You Do Well? Real-Time Personalized Feedback on Catheter Placement in Augmented Reality-Assisted Neurosurgical Training}
-    {IEEE Conference on Virtual Reality and 3D User Interfaces Abstracts and Workshops (VRW). 2024.}
+    {IEEE Conference on Virtual Reality and 3D User Interfaces Abstracts and Workshops (VRW). 2024. (Extended abstract)}
+\end{pubs}
+
+\cvsubsection{Preprints}
+\begin{pubs}
+\pub{J. Qin, \me, D. Zhang, M. Lentz, and D. Zhuo.}
+    {Vosti: Specifying, Implementing, and Verifying Deterministic LLM Inference}
+    {Under review. 2026.}
+\pub{\me, J. Ou, D. Zhuo, and M. Lentz.}
+    {Hydra: Efficient, Correct Code Generation via Checkpoint-and-Rollback Support}
+    {\href{https://arxiv.org/abs/2605.15238}{arXiv:2605.15238}. 2026.}
+\end{pubs}
 
 % ---------- Research Experience ----------
-\section{Research Experience}
-\org{Duke Systems Group}{(Advisors: Matthew Lentz, Danyang Zhuo)}
-\entry{Efficient Compiler-Constrained Code Generation}{Mar 2025 -- Present}
+\cvsection{Research Experience}
+\cvsubsection{Graduate Research}
+\entry{Scavenger Colocation for Cluster Utilization}{May 2026 -- Present}
 \begin{itemize}
-  \item Engineered a system that applies arbitrary prefix checkers to a token stream during code generation
-  \item Programmed an efficient prefix checker for C/C++ based on the Clang frontend
+  \item Evaluated GPU-sharing policies for scavenger jobs to improve utilization on the Duke Compute Cluster
+  \item Added flow-based job models, DCGM workload reconstruction, and single-GPU cluster emulation to a Slurm simulator
+  \item Implemented a working-set profiler and a profile-guided UVM manager by instrumenting the NVIDIA UVM driver
 \end{itemize}
-\entry{LLM-Based Proof Synthesis for Systems Software Verification}{Sep 2024 -- Present}
+\entry{Verified Deterministic LLM Inference}{Apr 2026 -- Sep 2026}
 \begin{itemize}
-  \item Co-architected a proof synthesis system for Rocq that strategically searches over LLM-generated proof tactics
-  \item Fine-tuned local models on Rocq projects to generate tactics with greater domain expertise
+  \item Extended Vosti's kernel verifier to support raw pointer arithmetic and swizzling in Triton kernels (under review)
 \end{itemize}
-\entry{Efficient Video Analytics Workflow Serving}{May 2022 -- Jul 2022}
+\entry{Efficient Compiler-Constrained Code Generation}{Mar 2025 -- Apr 2026}
 \begin{itemize}
-  \item Developed a framework for serving and optimizing video analytics workflows on heterogeneous infrastructure
-  \item Introduced an automatic model compression module to dynamically balance accuracy and inference latency
+  \item Developed Hydra, a code generation system that constrains LLMs with incremental static analysis (arXiv '26)
+  \item Retrofitted Clang and tsc for incremental analysis, reducing token consumption by up to 70\% vs.\ post-hoc repair
+  \item Built a Hydra-backed model provider that plugs into coding agents such as Codex and OpenCode
 \end{itemize}
-\vspace{4pt}
+\entry{LLM-Based Proof Synthesis for Systems Software Verification}{Sep 2024 -- Apr 2026}
+\begin{itemize}
+  \item Co-designed a proof search system over LLM-generated Rocq tactics and fine-tuned models on FSCQ (HotOS '25)
+\end{itemize}
 
-\org{I\textsuperscript{3}T Lab}{(Advisor: Maria Gorlatova)}
-\entry{User Attention for Surgical AR}{Aug 2023 -- May 2024}
-\begin{itemize}
-  \item Designed a real-time gaze-tracking pipeline for an AR-based surgical guidance system
-  \item Trained machine learning models to detect distractions that could impair task performance
-\end{itemize}
-\entry{Sparse Point Cloud Object Detection}{Jan 2023 -- May 2023}
-\begin{itemize}
-  \item Investigated the domain gap for 3D computer vision between dense LiDAR data and sparse VI-SLAM data
-  \item Implemented and evaluated up-sampling methods to improve point cloud density
-\end{itemize}
-\vspace{4pt}
-
-\org{Networked Systems Lab}{(Advisor: Ramesh Govindan)}
-\entry{3D Segmentation-Based Traffic Reconstruction}{Jul 2023 -- Aug 2023}
-\begin{itemize}
-  \item Contributed to a traffic reconstruction framework using multi-vehicle point cloud fusion
-  \item Integrated 3D semantic segmentation to improve the efficiency of point cloud registration
-\end{itemize}
+\cvsubsection{Undergraduate Research}
+\entry{User Attention for Surgical AR (Advisor: Maria Gorlatova)}{Aug 2023 -- May 2024}
+\entry{3D Segmentation-Based Traffic Reconstruction (Advisor: Ramesh Govindan)}{Jul 2023 -- Aug 2023}
+\entry{Sparse Point Cloud Object Detection (Advisor: Maria Gorlatova)}{Jan 2023 -- May 2023}
+\entry{Efficient Video Analytics Workflow Serving (Advisors: Matthew Lentz, Danyang Zhuo)}{May 2022 -- Jul 2022}
 
 % ---------- Industry Experience ----------
-\section{Industry Experience}
-\org{Hanson Robotics}{}
-\entry{Software Engineer Intern}{Jun 2021 -- Aug 2021}
-\begin{itemize}
-  \item Developed software for humanoid robots enabling real-time facial expression mimicry
-  \item Created tools for recording robot poses in Blender, improving animation workflows
-\end{itemize}
-
-% ---------- Talks ----------
-\section{Invited Talks}
-Can Large Language Models Verify Systems Software? A Case Study Using FSCQ as a Benchmark.\par
-\simpleline{\textit{Workshop on Hot Topics in Operating Systems, Banff, AB Canada}}{May 2025}
-
-% ---------- Mentorship ----------
-\section{Mentorship Experience}
-\simpleline{Jianjun Ou: M.S., Computer Science}{Nov 2025 -- Present}
+\cvsection{Industry Experience}
+\entry{Software Engineer Intern, Hanson Robotics}{Jun 2021 -- Aug 2021}
 
 % ---------- Teaching ----------
-\section{Teaching Experience}
+\cvsection{Teaching and Mentoring}
+\cvsubsection{Teaching}
 \simpleline{COMPSCI 310: Operating Systems}{Fall 2023, Spring 2025, Fall 2025}
 \simpleline{COMPSCI 230: Discrete Mathematics for Computer Science}{Fall 2022, Spring 2023, Fall 2023}
-\simpleline{ECON 204: Econometrics and Data Science}{Spring 2023}
-\simpleline{MATH 105L: Laboratory Calculus}{Spring 2022}
+\cvsubsection{Mentoring}
+\simpleline{Jianjun Ou, M.S. student, Computer Science}{Nov 2025 -- Present}
 
 % ---------- Awards ----------
-\section{Awards}
-\simpleline{Duke Graduate Fellowship}{Aug 2024 -- May 2026}
-\simpleline{Duke Summer Research Fellowship}{Jun 2025 -- Aug 2025}
-\simpleline{Duke Conference Travel Fellowship}{May 2025}
-\simpleline{Amazon SURE Research Fellow}{Jul 2023 -- Aug 2023}
-\simpleline{Duke CS+ Research Fellow}{May 2022 -- Jul 2022}
+\cvsection{Awards}
+\simpleline{Duke Graduate Fellow}{Aug 2024 -- May 2026}
+\simpleline{Duke Summer Research Fellow}{Summer 2025, Summer 2026}
+\simpleline{Duke Conference Travel Fellow}{May 2025}
+\simpleline{Amazon SURE Research Fellow}{Summer 2023}
+\simpleline{Duke CS+ Research Fellow}{Summer 2022}
 
 % ---------- Skills ----------
-\section{Skills}
-\textbf{Programming Languages:} Bash, C, C++, C\#, Dafny, Java, Python, Rocq, Rust\par
-\textbf{Compilers and Formal Verification:} Clang, LLVM, SMT solvers (Z3)\par
-\textbf{Machine Learning Frameworks:} Hugging Face, PyTorch, vLLM\par
-\textbf{Development and Deployment:} Docker, Git\par
+\cvsection{Skills}
+\textbf{Programming Languages:} Bash, C, C++, Python, Rust, TypeScript\par
+\textbf{Machine Learning Systems:} Hugging Face, PyTorch, SGLang, vLLM\par
+\textbf{GPU Infrastructure:} MIG, MPS, Nsight Compute, Nsight Systems, UVM\par
+\textbf{Other Systems and Tools:} Clang, Docker, gdb, LLVM, Slurm, tsc\par
+% Uncomment for networking applications:
+% \textbf{Networking:} Congestion control, RPC, socket programming, software-defined networking, TCP/IP\par
 
 \end{document}
