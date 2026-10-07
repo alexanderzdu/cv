@@ -24,7 +24,7 @@
 % instead of adding up (e.g. a subsection right under a rule adds nothing extra).
 \makeatletter
 \newcommand{\cvsection}[1]{%
-  \par\addvspace{8pt}%                       space between sections
+  \par\penalty-50\addvspace{8pt}%            allow a page break; space between sections
   {\bfseries\small\MakeUppercase{#1}\par}\nobreak
   \vspace{3pt}\hrule height 0.6pt\nobreak%   space above rule
   \addvspace{5pt}%                           space below rule
@@ -57,10 +57,10 @@
 
 % ---------- Header ----------
 \begin{center}
-  {\LARGE\scshape Alexander Du}\\[2pt]
+  {\LARGE\scshape Alexander Du}\\
   Durham, NC \,|\,
   \href{mailto:alexander.du@duke.edu}{alexander.du@duke.edu} \,|\,
-  \href{https://www.linkedin.com/in/alexander-du-a70b76217}{linkedin.com/in/alexander-du-a70b76217}
+  \href{https://alexanderzdu.github.io}{alexanderzdu.github.io}
 \end{center}
 
 % ---------- Education ----------
